@@ -50,6 +50,11 @@ function AppContent() {
     speak(message, { interrupt: true });
   }, []);
 
+  const announceQueued = useCallback((message) => {
+    setAnnouncement(message);
+    speak(message, { queue: true });
+  }, []);
+
   useEffect(() => {
     lastFocusRef.current = null;
   }, [currentStep]);
@@ -78,6 +83,7 @@ function AppContent() {
     userVotes,
     setUserVotes,
     announce,
+    announceQueued,
     navTabCount,
     setNavTabCount,
   };

@@ -1,19 +1,44 @@
 let currentUtterance = null;
+let speakQueue = [];
+let isSpeakingQueued = false;
+
+function processSpeakQueue() {
+  if (speakQueue.length === 0) {
+    isSpeakingQueued = false;
+    return;
+  }
+  isSpeakingQueued = true;
+  const t = speakQueue.shift();
+  const utterance = new SpeechSynthesisUtterance(t);
+  utterance.rate = 0.95;
+  utterance.pitch = 1;
+  utterance.onend = () => processSpeakQueue();
+  currentUtterance = utterance;
+  window.speechSynthesis.speak(utterance);
+}
 
 /**
  * Speak text using the Web Speech API. Like a screen reader.
  * @param {string} text - Text to speak
- * @param {{ interrupt?: boolean }} options - interrupt: cancel current speech and speak new text
+ * @param {{ interrupt?: boolean, queue?: boolean }} options - interrupt: cancel current speech and speak new text; queue: wait for current speech to finish before speaking
  */
-export function speak(text, { interrupt = true } = {}) {
+export function speak(text, { interrupt = true, queue = false } = {}) {
   if (typeof window === "undefined" || !window.speechSynthesis) {
     return;
   }
   const t = String(text || "").trim();
   if (!t) return;
 
+  if (queue) {
+    speakQueue.push(t);
+    if (!isSpeakingQueued) processSpeakQueue();
+    return;
+  }
+
   if (interrupt) {
     window.speechSynthesis.cancel();
+    speakQueue = [];
+    isSpeakingQueued = false;
   }
 
   const utterance = new SpeechSynthesisUtterance(t);
@@ -24,12 +49,14 @@ export function speak(text, { interrupt = true } = {}) {
 }
 
 /**
- * Cancel any in-progress speech.
+ * Cancel any in-progress speech and clear the queue.
  */
 export function cancelSpeech() {
   if (typeof window !== "undefined" && window.speechSynthesis) {
     window.speechSynthesis.cancel();
   }
+  speakQueue = [];
+  isSpeakingQueued = false;
   currentUtterance = null;
 }
 

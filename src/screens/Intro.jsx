@@ -10,7 +10,7 @@ export function Intro() {
     if (h1Ref.current) {
       h1Ref.current.focus();
     }
-    announce("Welcome to Horizon. Press Tab to navigate. Press Enter to begin.");
+    announce("Welcome to Miro Horizon. Press Tab to navigate. Press Enter to begin.");
   }, [announce]);
 
   useEffect(() => {
@@ -31,9 +31,9 @@ export function Intro() {
         ref={h1Ref}
         tabIndex={0}
         className={`text-3xl font-bold text-slate-800 dark:text-slate-100 mb-4 ${fc}`}
-        data-speak="Welcome to Horizon. Press Tab to navigate. Press Enter to begin."
+        data-speak="Welcome to Miro Horizon. "
       >
-        Welcome to Horizon
+        Welcome to Miro Horizon
       </h1>
       <p
         tabIndex={0}
@@ -65,13 +65,6 @@ export function Intro() {
           Everything works with keyboard or touch.
         </p>
       </div>
-      <Button
-        type="button"
-        onClick={advance}
-        data-speak="Press Enter to begin. Button."
-      >
-        Press Enter to Begin
-      </Button>
       <p
         tabIndex={0}
         className={`mt-6 text-sm text-slate-500 ${fc}`}
@@ -79,6 +72,15 @@ export function Intro() {
       >
         Use Tab to move between elements.
       </p>
+
+      <Button
+        type="button"
+        onClick={advance}
+        data-speak="Press Enter to begin. Button."
+      >
+        Press Enter to Begin
+      </Button>
+
     </div>
   );
 }

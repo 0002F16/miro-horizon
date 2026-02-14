@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useApp } from "../context/AppContext";
 import { Button } from "../components/ui";
-import { TEAM_NAMES } from "../data/scenario";
 
 export function Collaboration() {
-  const { advance, verbosity, setVerbosity, announce } = useApp();
+  const { advance, verbosity, setVerbosity, announceQueued } = useApp();
   const h1Ref = useRef(null);
   const [events, setEvents] = useState([]);
   const scheduledRef = useRef(false);
@@ -18,26 +17,31 @@ export function Collaboration() {
   useEffect(() => {
     if (scheduledRef.current) return;
     scheduledRef.current = true;
-    const name = TEAM_NAMES[0]; // Jana
-    // Play "Jana joined the board" as soon as you get to section 3
-    const msgJoined = `${name} joined the board.`;
-    setEvents((e) => [...e, msgJoined]);
-    if (verbosityRef.current === "high") announce(msgJoined);
+    const msg1 = "Sherwin joined the board.";
+    setEvents((e) => [...e, msg1]);
+    if (verbosityRef.current === "high") announceQueued(msg1);
     const t2 = setTimeout(() => {
-      const msg = "New item added in Example Section.";
+      const msg = "Jana joined the board.";
       setEvents((e) => [...e, msg]);
-      if (verbosityRef.current === "high") announce(msg);
+      if (verbosityRef.current === "high") announceQueued(msg);
     }, 3000);
     const t3 = setTimeout(() => {
-      const msg = "2 votes added to Improve onboarding.";
+      const msg = "Sherwin added red post it note to feature board: employer testimonials.";
       setEvents((e) => [...e, msg]);
-      if (verbosityRef.current === "high") announce(msg);
+      if (verbosityRef.current === "high") announceQueued(msg);
     }, 5000);
+    const t4 = setTimeout(() => {
+      const msg = "Mo removed post it note from feature board: employer testimonials.";
+      setEvents((e) => [...e, msg]);
+      if (verbosityRef.current === "high") announceQueued(msg);
+    }, 7000);
     return () => {
+      scheduledRef.current = false;
       clearTimeout(t2);
       clearTimeout(t3);
+      clearTimeout(t4);
     };
-  }, [announce]);
+  }, [announceQueued]);
 
   const fc = "outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded";
   return (
@@ -84,13 +88,14 @@ export function Collaboration() {
           </label>
         </div>
       </div>
-      {events.length > 0 && (
-        <ul className="mb-6 list-disc list-inside text-slate-600 dark:text-slate-400 text-sm">
+      <div className="mb-6 min-h-[120px] rounded border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-4">
+        <p className="text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">Events</p>
+        <ul className="list-disc list-inside text-slate-700 dark:text-slate-300 text-sm space-y-1">
           {events.map((ev, i) => (
             <li key={i} tabIndex={0} className={fc} data-speak={ev}>{ev}</li>
           ))}
         </ul>
-      )}
+      </div>
       <Button type="button" onClick={advance} data-speak="Next. Button.">
         Next
       </Button>
