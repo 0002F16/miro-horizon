@@ -1,9 +1,8 @@
 import { KeyboardHelpDialog } from "./KeyboardHelpDialog";
 import { Button } from "./ui";
 
-export function Layout({ children, keyboardHelpOpen, setKeyboardHelpOpen, blindMode, currentStep }) {
+export function Layout({ children, keyboardHelpOpen, setKeyboardHelpOpen, currentStep }) {
   const showKeyboardHelp = currentStep >= 1;
-  const showBlindToggle = currentStep >= 4;
 
   return (
     <>
@@ -22,15 +21,6 @@ export function Layout({ children, keyboardHelpOpen, setKeyboardHelpOpen, blindM
               Keyboard Help (?)
             </Button>
           </div>
-        )}
-        {showBlindToggle && blindMode && (
-          <div
-            className="fixed inset-0 pointer-events-none z-40"
-            aria-hidden="true"
-            style={{
-              background: "rgba(0,0,0,0.95)",
-            }}
-          />
         )}
       </div>
       <KeyboardHelpDialog open={keyboardHelpOpen} onClose={() => setKeyboardHelpOpen(false)} currentStep={currentStep} />

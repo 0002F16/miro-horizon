@@ -16,6 +16,11 @@ export function BlindModeIntro() {
     if (next) announce("Blind Mode enabled.");
   };
 
+  const handleNext = () => {
+    setBlindMode(true);
+    advance();
+  };
+
   const fc = "outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded";
   return (
     <div className="max-w-xl mx-auto">
@@ -46,11 +51,11 @@ export function BlindModeIntro() {
       <p
         tabIndex={0}
         className={`text-slate-500 dark:text-slate-400 text-sm mb-6 ${fc}`}
-        data-speak="When activated: screen will darken, focus ring remains visible, all controls remain functional. Blind Mode is optional."
+        data-speak="When you continue, Vision Off mode will turn on and the screen will go black for the rest of the experience. Focus ring remains visible, all controls remain functional."
       >
-        When activated: screen will darken, focus ring remains visible, all controls remain functional. Blind Mode is optional.
+        When you continue, Vision Off mode will turn on and the screen will go black for the rest of the experience. Focus ring remains visible, all controls remain functional.
       </p>
-      <Button type="button" onClick={advance} data-speak="Next. Button.">
+      <Button type="button" onClick={handleNext} data-speak="Next. Vision Off mode will turn on for the rest of the experience. Button.">
         Next
       </Button>
     </div>

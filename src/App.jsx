@@ -136,7 +136,6 @@ function AppContent() {
           <Layout
             keyboardHelpOpen={keyboardHelpOpen}
             setKeyboardHelpOpen={setKeyboardHelpOpen}
-            blindMode={blindMode}
             currentStep={currentStep}
           >
             <main className="flex-1 flex flex-col items-center justify-center">

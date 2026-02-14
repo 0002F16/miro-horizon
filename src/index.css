@@ -29,15 +29,20 @@ body {
   border: 0;
 }
 
-/* Blind mode: large, high-contrast focus ring */
-[data-blind-mode="true"] *:focus {
-  outline: 4px solid #fbbf24;
-  outline-offset: 2px;
+/* Blind mode: fully black screen, no highlights */
+[data-blind-mode="true"],
+[data-blind-mode="true"] .min-h-screen,
+[data-blind-mode="true"] main {
+  background: #000 !important;
 }
-[data-blind-mode="true"] *:focus:not(:focus-visible) {
-  outline: none;
+[data-blind-mode="true"] * {
+  color: transparent !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
+[data-blind-mode="true"] *:focus,
 [data-blind-mode="true"] *:focus-visible {
-  outline: 4px solid #fbbf24;
-  outline-offset: 2px;
+  outline: none !important;
 }
