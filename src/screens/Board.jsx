@@ -95,17 +95,15 @@ export function Board() {
   useEffect(() => {
     const items = boardItems;
     const handleKeyDown = (e) => {
-      if (e.key === "v" && !e.shiftKey) {
+      if ((e.key === "v" || e.key === "V") && !e.shiftKey) {
         e.preventDefault();
         const item = items[focusedIndex];
-        if (!item || userVotes.has(item.id)) return;
-        if (userVotes.size >= MAX_VOTES) return;
-        addVote(item.id);
-      } else if (e.key === "V" && e.shiftKey) {
-        e.preventDefault();
-        const item = items[focusedIndex];
-        if (!item || !userVotes.has(item.id)) return;
-        removeVote(item.id);
+        if (!item) return;
+        if (userVotes.has(item.id)) {
+          removeVote(item.id);
+        } else if (userVotes.size < MAX_VOTES) {
+          addVote(item.id);
+        }
       } else if (e.key === "r" || e.key === "R") {
         e.preventDefault();
         const item = items[focusedIndex];
@@ -159,7 +157,7 @@ export function Board() {
             const voteCount = voters.length;
             const votersText = voteCount === 0 ? "No votes" : voteCount === 1 ? `1 vote · ${voters[0]}` : `${voteCount} votes · ${voters.join(", ")}`;
             const speakVoters = voteCount === 0 ? "No votes yet." : `${voteCount} vote${voteCount !== 1 ? "s" : ""}. Voted by: ${voters.join(", ")}.`;
-            const dataSpeak = `Item ${i + 1} of ${items.length}: ${stripHtml(it.title)}. ${speakVoters} ${userVotes.has(it.id) ? "You voted. " : ""}${canVote ? "Press V to add vote." : ""}`;
+            const dataSpeak = `Item ${i + 1} of ${items.length}: ${stripHtml(it.title)}. ${speakVoters} ${userVotes.has(it.id) ? "You voted. " : ""}${(userVotes.has(it.id) || canVote) ? "Press V to add or remove vote." : ""}`;
             return (
               <li key={it.id}>
                 <button
@@ -187,9 +185,9 @@ export function Board() {
       <p
         tabIndex={0}
         className={`text-sm text-slate-500 dark:text-slate-400 mb-4 ${fc}`}
-        data-speak="Tab to move between items. V to add vote. Shift+V to remove. R to read details. Enter to open item."
+        data-speak="Tab to move between items. V to add or remove vote. R to read details. Enter to open item."
       >
-        Tab to move between items. V to add vote. Shift+V to remove. R to read details. Enter to open item.
+        Tab to move between items. V to add or remove vote. R to read details. Enter to open item.
       </p>
     </div>
   );

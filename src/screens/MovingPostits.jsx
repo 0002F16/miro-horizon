@@ -43,7 +43,7 @@ export function MovingPostits() {
 
   useEffect(() => {
     announce(
-      "Moving Post-its. To Do, Doing, Done. Move all items from Doing to Done. V to grab, move with Tab, Shift+V to drop. P to proceed."
+      "Moving Post-its. To Do, Doing, Done. Move all items from Doing to Done. V to grab or drop. P to proceed."
     );
   }, [announce]);
 
@@ -58,40 +58,34 @@ export function MovingPostits() {
   useEffect(() => {
     const entries = focusEntries;
     const handleKeyDown = (e) => {
-      if (e.key === "v" && !e.shiftKey) {
+      if ((e.key === "v" || e.key === "V") && !e.shiftKey) {
         e.preventDefault();
         const entry = entries[focusedIndex];
-        if (entry?.type !== "item") return;
         if (carriedItemId) {
-          announce("Already carrying an item. Shift+V to drop.");
-          return;
+          const targetColumn = entry?.columnId ?? "done";
+          setColumns((prev) => {
+            const next = {
+              todo: [...(prev.todo || [])],
+              doing: [...(prev.doing || [])],
+              done: [...(prev.done || [])],
+            };
+            const item = [...(prev.todo || []), ...(prev.doing || []), ...(prev.done || [])].find(
+              (i) => i.id === carriedItemId
+            );
+            if (!item) return prev;
+            next[carriedFromColumn] = next[carriedFromColumn].filter((i) => i.id !== carriedItemId);
+            next[targetColumn] = [...next[targetColumn], item];
+            return next;
+          });
+          setCarriedItemId(null);
+          setCarriedFromColumn(null);
+          const label = COLUMN_LABELS[targetColumn];
+          announce(`Dropped into ${label}.`);
+        } else if (entry?.type === "item") {
+          setCarriedItemId(entry.item.id);
+          setCarriedFromColumn(entry.columnId);
+          announce(`Grabbed ${entry.item.title}.`);
         }
-        setCarriedItemId(entry.item.id);
-        setCarriedFromColumn(entry.columnId);
-        announce(`Grabbed ${entry.item.title}.`);
-      } else if (e.key === "V" && e.shiftKey) {
-        e.preventDefault();
-        if (!carriedItemId) return;
-        const entry = entries[focusedIndex];
-        const targetColumn = entry?.columnId ?? "done";
-        setColumns((prev) => {
-          const next = {
-            todo: [...(prev.todo || [])],
-            doing: [...(prev.doing || [])],
-            done: [...(prev.done || [])],
-          };
-          const item = [...(prev.todo || []), ...(prev.doing || []), ...(prev.done || [])].find(
-            (i) => i.id === carriedItemId
-          );
-          if (!item) return prev;
-          next[carriedFromColumn] = next[carriedFromColumn].filter((i) => i.id !== carriedItemId);
-          next[targetColumn] = [...next[targetColumn], item];
-          return next;
-        });
-        setCarriedItemId(null);
-        setCarriedFromColumn(null);
-        const label = COLUMN_LABELS[targetColumn];
-        announce(`Dropped into ${label}.`);
       } else if (e.key === "p" || e.key === "P") {
         e.preventDefault();
         advance();
@@ -130,9 +124,9 @@ export function MovingPostits() {
       <p
         tabIndex={0}
         className={`text-sm text-slate-500 dark:text-slate-400 mb-4 ${fc}`}
-        data-speak="V to grab, move with Tab, Shift+V to drop. Move all from Doing to Done. P to proceed."
+        data-speak="V to grab or drop. Move all from Doing to Done. P to proceed."
       >
-        V to grab, move with Tab, Shift+V to drop. Move all from Doing to Done. P to proceed.
+        V to grab or drop. Move all from Doing to Done. P to proceed.
       </p>
 
       <div className="grid grid-cols-3 gap-4 mb-4" aria-hidden="true">
@@ -159,7 +153,7 @@ export function MovingPostits() {
       </div>
 
       <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">
-        Tab through items and drop zones below. V grab, Shift+V drop, P proceed.
+        Tab through items and drop zones below. V grab or drop, P proceed.
       </p>
       <ul role="list" className="space-y-2 max-w-xl" aria-label="Post-its and drop zones">
         {focusEntries.map((entry, i) => {
@@ -188,7 +182,7 @@ export function MovingPostits() {
           const itemsInCol = columns[entry.columnId] || [];
           const pos = itemsInCol.findIndex((x) => x.id === item.id) + 1;
           const total = itemsInCol.length;
-          const ariaLabel = `${colLabel}, item ${pos} of ${total}: ${item.title}. ${carriedItemId ? "Shift+V to drop." : "V to grab."}`;
+          const ariaLabel = `${colLabel}, item ${pos} of ${total}: ${item.title}. ${carriedItemId ? "V to drop." : "V to grab."}`;
           return (
             <li key={item.id}>
               <button
@@ -207,7 +201,7 @@ export function MovingPostits() {
                 <span className="font-medium text-slate-800 dark:text-slate-100">{item.title}</span>
                 {isCarried && (
                   <span className="block text-xs text-amber-700 dark:text-amber-400 mt-1">
-                    Carried — move focus then Shift+V to drop
+                    Carried — move focus then V to drop
                   </span>
                 )}
               </button>

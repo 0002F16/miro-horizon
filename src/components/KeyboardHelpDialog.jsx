@@ -10,13 +10,11 @@ const SHORTCUTS_BASE = [
 ];
 
 const SHORTCUTS_VOTING = [
-  { keys: "V", desc: "Add vote (on board)" },
-  { keys: "Shift + V", desc: "Remove vote (on board)" },
+  { keys: "V", desc: "Add or remove vote (on board)" },
 ];
 
 const SHORTCUTS_MOVING = [
-  { keys: "V", desc: "Grab post-it" },
-  { keys: "Shift + V", desc: "Drop post-it" },
+  { keys: "V", desc: "Grab or drop post-it" },
   { keys: "P", desc: "Proceed / continue" },
 ];
 
