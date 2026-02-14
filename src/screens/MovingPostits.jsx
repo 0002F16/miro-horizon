@@ -43,7 +43,7 @@ export function MovingPostits() {
 
   useEffect(() => {
     announce(
-      "Moving Post-its. To Do, Doing, Done. Move all items from Doing to Done. V to grab, move with arrows or Tab, Shift+V to drop. P to proceed."
+      "Moving Post-its. To Do, Doing, Done. Move all items from Doing to Done. V to grab, move with Tab, Shift+V to drop. P to proceed."
     );
   }, [announce]);
 
@@ -58,13 +58,7 @@ export function MovingPostits() {
   useEffect(() => {
     const entries = focusEntries;
     const handleKeyDown = (e) => {
-      if (e.key === "ArrowDown" && focusedIndex < entries.length - 1) {
-        e.preventDefault();
-        itemRefs.current[focusedIndex + 1]?.focus();
-      } else if (e.key === "ArrowUp" && focusedIndex > 0) {
-        e.preventDefault();
-        itemRefs.current[focusedIndex - 1]?.focus();
-      } else if (e.key === "v" && !e.shiftKey) {
+      if (e.key === "v" && !e.shiftKey) {
         e.preventDefault();
         const entry = entries[focusedIndex];
         if (entry?.type !== "item") return;
@@ -136,9 +130,9 @@ export function MovingPostits() {
       <p
         tabIndex={0}
         className={`text-sm text-slate-500 dark:text-slate-400 mb-4 ${fc}`}
-        data-speak="V to grab, move with arrows or Tab, Shift+V to drop. Move all from Doing to Done. P to proceed."
+        data-speak="V to grab, move with Tab, Shift+V to drop. Move all from Doing to Done. P to proceed."
       >
-        V to grab, move with arrows or Tab, Shift+V to drop. Move all from Doing to Done. P to proceed.
+        V to grab, move with Tab, Shift+V to drop. Move all from Doing to Done. P to proceed.
       </p>
 
       <div className="grid grid-cols-3 gap-4 mb-4" aria-hidden="true">

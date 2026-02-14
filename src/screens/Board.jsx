@@ -95,13 +95,7 @@ export function Board() {
   useEffect(() => {
     const items = boardItems;
     const handleKeyDown = (e) => {
-      if (e.key === "ArrowDown" && focusedIndex < items.length - 1) {
-        e.preventDefault();
-        itemRefs.current[focusedIndex + 1]?.focus();
-      } else if (e.key === "ArrowUp" && focusedIndex > 0) {
-        e.preventDefault();
-        itemRefs.current[focusedIndex - 1]?.focus();
-      } else if (e.key === "v" && !e.shiftKey) {
+      if (e.key === "v" && !e.shiftKey) {
         e.preventDefault();
         const item = items[focusedIndex];
         if (!item || userVotes.has(item.id)) return;

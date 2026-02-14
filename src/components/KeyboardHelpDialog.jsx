@@ -4,7 +4,6 @@ import { Button } from "./ui";
 const SHORTCUTS_BASE = [
   { keys: "Tab", desc: "Move forward" },
   { keys: "Shift + Tab", desc: "Move backward" },
-  { keys: "Arrow keys", desc: "Move within lists" },
   { keys: "R", desc: "Hear summary" },
   { keys: "Enter", desc: "Activate / open item" },
   { keys: "Escape", desc: "Close this dialog" },
@@ -24,7 +23,7 @@ const SHORTCUTS_MOVING = [
 function getShortcuts(currentStep) {
   const isMovingStep = currentStep === 9;
   const vShortcuts = isMovingStep ? SHORTCUTS_MOVING : SHORTCUTS_VOTING;
-  return [...SHORTCUTS_BASE.slice(0, 4), ...vShortcuts, ...SHORTCUTS_BASE.slice(4)];
+  return [...SHORTCUTS_BASE.slice(0, 3), ...vShortcuts, ...SHORTCUTS_BASE.slice(3)];
 }
 
 export function KeyboardHelpDialog({ open, onClose, currentStep = 0 }) {

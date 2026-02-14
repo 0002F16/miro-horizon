@@ -12,7 +12,7 @@ export function MovingPostitsBriefing() {
 
   useEffect(() => {
     announce(
-      "Moving Post-its. You'll see three columns: To Do, Doing, and Done. Press V to grab a post-it, move with Tab or arrows, then Shift+V to drop. Continue when ready."
+      "Moving Post-its. You'll see three columns: To Do, Doing, and Done. Press V to grab a post-it, move with Tab, then Shift+V to drop. Continue when ready."
     );
   }, [announce]);
 
@@ -39,9 +39,9 @@ export function MovingPostitsBriefing() {
       <p
         tabIndex={0}
         className={`text-slate-700 dark:text-slate-200 mb-4 ${fc}`}
-        data-speak="You move post-its between columns. Press V to grab the post-it under focus. Move to the column you want using Tab or the arrow keys. Press Shift+V to drop it there."
+        data-speak="You move post-its between columns. Press V to grab the post-it under focus. Move to the column you want using Tab. Press Shift+V to drop it there."
       >
-        You'll move post-its between columns. Press <kbd className="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 font-mono text-sm">V</kbd> to <strong>grab</strong> the post-it under focus. Move to the column you want using Tab or the arrow keys. Press <kbd className="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 font-mono text-sm">Shift+V</kbd> to <strong>drop</strong> it there.
+        You'll move post-its between columns. Press <kbd className="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 font-mono text-sm">V</kbd> to <strong>grab</strong> the post-it under focus. Move to the column you want using Tab. Press <kbd className="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 font-mono text-sm">Shift+V</kbd> to <strong>drop</strong> it there.
       </p>
 
       <p

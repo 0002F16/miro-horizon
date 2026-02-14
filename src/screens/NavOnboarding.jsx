@@ -32,7 +32,6 @@ export function NavOnboarding() {
       <ul className="space-y-3 text-slate-600 dark:text-slate-300 mb-8 list-disc list-inside">
         <li tabIndex={0} className={fc} data-speak="Use Tab to move forward.">Use Tab to move forward.</li>
         <li tabIndex={0} className={fc} data-speak="Shift + Tab to move backward.">Shift + Tab to move backward.</li>
-        <li tabIndex={0} className={fc} data-speak="Arrow keys move within lists.">Arrow keys move within lists.</li>
         <li tabIndex={0} className={fc} data-speak="Press R to hear a summary.">Press R to hear a summary.</li>
       </ul>
       <Button

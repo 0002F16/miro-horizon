@@ -19,20 +19,14 @@ export function Structure() {
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === "ArrowDown" && focusedIndex < DEMO_ITEMS.length - 1) {
-        e.preventDefault();
-        setFocusedIndex((i) => i + 1);
-      } else if (e.key === "ArrowUp" && focusedIndex > 0) {
-        e.preventDefault();
-        setFocusedIndex((i) => i - 1);
-      } else if (e.key === "r" || e.key === "R") {
+      if (e.key === "r" || e.key === "R") {
         e.preventDefault();
         speak(`Section: Example Section. ${DEMO_ITEMS.length} items.`, { interrupt: true });
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [focusedIndex]);
+  }, []);
 
   const fc = "outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded";
   return (
@@ -62,11 +56,9 @@ export function Structure() {
             <li key={item.id}>
               <button
                 type="button"
-                tabIndex={focusedIndex === i ? 0 : -1}
-                onClick={() => setFocusedIndex(i)}
-                className={`w-full text-left px-3 py-2 rounded focus:ring-2 focus:ring-indigo-500 outline-none ${
-                  focusedIndex === i ? "ring-2 ring-indigo-500 bg-indigo-50 dark:bg-indigo-900/20" : ""
-                }`}
+                tabIndex={0}
+                onFocus={() => setFocusedIndex(i)}
+                className="w-full text-left px-3 py-2 rounded focus:ring-2 focus:ring-indigo-500 focus:bg-indigo-50 dark:focus:bg-indigo-900/20 outline-none"
                 data-speak={`Item ${i + 1} of ${DEMO_ITEMS.length}: ${item.description}`}
               >
                 {item.label}: {item.description}
