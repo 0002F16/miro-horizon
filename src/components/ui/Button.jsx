@@ -7,20 +7,28 @@ const variantStyles = {
     "bg-transparent text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 focus:ring-2 focus:ring-slate-400 focus:ring-offset-2",
 };
 
-export function Button({
-  variant = "primary",
-  type = "button",
-  className = "",
-  children,
-  ...props
-}) {
+import { forwardRef } from "react";
+
+export const Button = forwardRef(function Button(
+  {
+    variant = "primary",
+    type = "button",
+    className = "",
+    children,
+    tabIndex,
+    ...props
+  },
+  ref
+) {
   return (
     <button
+      ref={ref}
       type={type}
+      tabIndex={tabIndex !== undefined ? tabIndex : 0}
       className={`font-sans font-medium px-4 py-2 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${variantStyles[variant]} ${className}`}
       {...props}
     >
       {children}
     </button>
   );
-}
+});
