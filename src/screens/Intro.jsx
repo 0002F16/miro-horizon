@@ -4,13 +4,13 @@ import { Button } from "../components/ui";
 
 export function Intro() {
   const { advance, announce } = useApp();
-  const h1Ref = useRef(null);
+  const tabPromptRef = useRef(null);
 
   useEffect(() => {
-    if (h1Ref.current) {
-      h1Ref.current.focus();
+    if (tabPromptRef.current) {
+      tabPromptRef.current.focus();
     }
-    announce("Welcome to Miro Horizon. Press Tab to navigate. Press Enter to begin.");
+    announce("Welcome to Miro Horizon. This screen is keyboard-first. Press Tab now to move through the page. Press Enter on the button to begin.");
   }, [announce]);
 
   useEffect(() => {
@@ -28,7 +28,6 @@ export function Intro() {
   return (
     <div className="max-w-xl mx-auto text-center">
       <h1
-        ref={h1Ref}
         tabIndex={0}
         className={`text-3xl font-bold text-slate-800 dark:text-slate-100 mb-4 ${fc}`}
         data-speak="Welcome to Miro Horizon. "
@@ -37,10 +36,18 @@ export function Intro() {
       </h1>
       <p
         tabIndex={0}
-        className={`text-lg text-slate-600 dark:text-slate-300 mb-2 ${fc}`}
+        className={`text-lg text-slate-600 dark:text-slate-300 mb-4 ${fc}`}
         data-speak="A semantic collaboration board."
       >
         A semantic collaboration board.
+      </p>
+      <p
+        ref={tabPromptRef}
+        tabIndex={0}
+        className={`text-base font-semibold text-indigo-600 dark:text-indigo-400 mb-6 ${fc}`}
+        data-speak="Press Tab now to move through this screen. Keyboard navigation first."
+      >
+        Press Tab now to move through this screen.
       </p>
       <div className="text-slate-600 dark:text-slate-400 space-y-2 mb-8 text-left">
         <p
@@ -68,9 +75,9 @@ export function Intro() {
       <p
         tabIndex={0}
         className={`mt-6 text-sm text-slate-500 ${fc}`}
-        data-speak="Use Tab to move between elements."
+        data-speak="Tab moves between elements. Shift+Tab moves back. Everything is keyboard-first."
       >
-        Use Tab to move between elements.
+        Tab moves forward, Shift+Tab moves back. Everything is keyboard-first.
       </p>
 
       <Button
