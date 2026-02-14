@@ -2,7 +2,7 @@ import { KeyboardHelpDialog } from "./KeyboardHelpDialog";
 import { Button } from "./ui";
 
 export function Layout({ children, keyboardHelpOpen, setKeyboardHelpOpen, currentStep }) {
-  const showKeyboardHelp = currentStep >= 1;
+  const showKeyboardHelp = currentStep >= 1 && currentStep <= 4;
 
   return (
     <>
@@ -15,7 +15,7 @@ export function Layout({ children, keyboardHelpOpen, setKeyboardHelpOpen, curren
               variant="ghost"
               onClick={() => setKeyboardHelpOpen(true)}
               aria-label="Keyboard Help"
-              data-speak="Keyboard Help. Press to open shortcuts. Button."
+              data-speak="Button. Keyboard Help. Press to open shortcuts."
               className="text-sm px-3 py-1"
             >
               Keyboard Help (?)
@@ -23,7 +23,9 @@ export function Layout({ children, keyboardHelpOpen, setKeyboardHelpOpen, curren
           </div>
         )}
       </div>
-      <KeyboardHelpDialog open={keyboardHelpOpen} onClose={() => setKeyboardHelpOpen(false)} currentStep={currentStep} />
+      {showKeyboardHelp && (
+        <KeyboardHelpDialog open={keyboardHelpOpen} onClose={() => setKeyboardHelpOpen(false)} currentStep={currentStep} />
+      )}
     </>
   );
 }

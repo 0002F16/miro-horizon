@@ -45,7 +45,7 @@ export function SprintScenario() {
       <Button
         type="button"
         onClick={advance}
-        data-speak="Enter Voting Board. Button."
+        data-speak="Button. Enter Voting Board."
       >
         Enter Voting Board
       </Button>

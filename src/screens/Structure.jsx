@@ -67,7 +67,7 @@ export function Structure() {
           ))}
         </ul>
       </div>
-      <Button type="button" onClick={advance} data-speak="Next. Button.">
+      <Button type="button" onClick={advance} data-speak="Button. Next.">
         Next
       </Button>
     </div>

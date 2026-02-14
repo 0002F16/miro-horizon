@@ -60,7 +60,7 @@ export function Completion() {
         ref={buttonRef}
         type="button"
         onClick={() => goToStep(11)}
-        data-speak="Finish. Button."
+        data-speak="Button. Finish."
       >
         Finish
       </Button>

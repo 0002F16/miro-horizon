@@ -83,7 +83,7 @@ export function Intro() {
       <Button
         type="button"
         onClick={advance}
-        data-speak="Press Enter to begin. Button."
+        data-speak="Button. Press Enter to begin."
       >
         Press Enter to Begin
       </Button>

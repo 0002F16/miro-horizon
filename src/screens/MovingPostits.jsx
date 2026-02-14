@@ -214,7 +214,7 @@ export function MovingPostits() {
         <Button
           type="button"
           onClick={advance}
-          data-speak="Continue. P to proceed. Button."
+          data-speak="Button. Continue. P to proceed."
           aria-label="Continue (P)"
         >
           Continue (P)

@@ -37,7 +37,7 @@ export function NavOnboarding() {
       <Button
         type="button"
         onClick={advance}
-        data-speak="Next. Press Enter to continue. Button."
+        data-speak="Button. Next. Press Enter to continue."
       >
         Next
       </Button>

@@ -44,7 +44,7 @@ export function Results() {
       <Button
         type="button"
         onClick={advance}
-        data-speak="Continue to next task. Button."
+        data-speak="Button. Continue to next task."
       >
         Continue to Next Task
       </Button>

@@ -60,7 +60,7 @@ export function MovingPostitsBriefing() {
         OBJECTIVE: move all post-its to the DONE column
       </p>
 
-      <Button type="button" onClick={advance} data-speak="Continue to Moving Post-its. Button.">
+      <Button type="button" onClick={advance} data-speak="Button. Continue to Moving Post-its.">
         Continue
       </Button>
     </div>

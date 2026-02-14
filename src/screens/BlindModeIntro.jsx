@@ -44,7 +44,7 @@ export function BlindModeIntro() {
         variant="secondary"
         onClick={handleToggle}
         className="mb-6"
-        data-speak={blindMode ? "Toggle Blind Mode off. Button." : "Toggle Blind Mode. Screen will darken. Focus ring remains visible. Button."}
+        data-speak={blindMode ? "Button. Toggle Blind Mode off." : "Button. Toggle Blind Mode. Screen will darken. Focus ring remains visible."}
       >
         Toggle Blind Mode
       </Button>
@@ -55,7 +55,7 @@ export function BlindModeIntro() {
       >
         When you continue, Vision Off mode will turn on and the screen will go black for the rest of the experience. Focus ring remains visible, all controls remain functional.
       </p>
-      <Button type="button" onClick={handleNext} data-speak="Next. Vision Off mode will turn on for the rest of the experience. Button.">
+      <Button type="button" onClick={handleNext} data-speak="Button. Next. Vision Off mode will turn on for the rest of the experience.">
         Next
       </Button>
     </div>

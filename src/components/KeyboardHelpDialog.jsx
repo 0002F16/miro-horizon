@@ -106,7 +106,7 @@ export function KeyboardHelpDialog({ open, onClose, currentStep = 0 }) {
             onClose();
             if (previousActiveRef.current?.focus) previousActiveRef.current.focus();
           }}
-          data-speak="Close keyboard help. Button."
+          data-speak="Button. Close keyboard help."
         >
           Close
         </Button>

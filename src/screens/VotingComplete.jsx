@@ -44,7 +44,7 @@ export function VotingComplete() {
         ref={buttonRef}
         type="button"
         onClick={advance}
-        data-speak="Continue. Button."
+        data-speak="Button. Continue."
       >
         Continue
       </Button>

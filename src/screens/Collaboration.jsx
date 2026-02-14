@@ -10,6 +10,8 @@ export function Collaboration() {
   const verbosityRef = useRef(verbosity);
   verbosityRef.current = verbosity;
 
+  const eventText = (ev) => (verbosity === "high" ? ev.high : ev.low);
+
   useEffect(() => {
     if (h1Ref.current) h1Ref.current.focus();
   }, []);
@@ -17,23 +19,23 @@ export function Collaboration() {
   useEffect(() => {
     if (scheduledRef.current) return;
     scheduledRef.current = true;
-    const msg1 = "Sherwin joined the board.";
-    setEvents((e) => [...e, msg1]);
-    if (verbosityRef.current === "high") announceQueued(msg1);
+    const ev1 = { high: "Sherwin joined the board.", low: "Sherwin joined." };
+    setEvents((e) => [...e, ev1]);
+    if (verbosityRef.current === "high") announceQueued(ev1.high);
     const t2 = setTimeout(() => {
-      const msg = "Jana joined the board.";
-      setEvents((e) => [...e, msg]);
-      if (verbosityRef.current === "high") announceQueued(msg);
+      const ev = { high: "Jana joined the board.", low: "Jana joined." };
+      setEvents((e) => [...e, ev]);
+      if (verbosityRef.current === "high") announceQueued(ev.high);
     }, 3000);
     const t3 = setTimeout(() => {
-      const msg = "Sherwin added red post it note to feature board: employer testimonials.";
-      setEvents((e) => [...e, msg]);
-      if (verbosityRef.current === "high") announceQueued(msg);
+      const ev = { high: "Sherwin added red post it note to feature board: employer testimonials.", low: "Sherwin added a note." };
+      setEvents((e) => [...e, ev]);
+      if (verbosityRef.current === "high") announceQueued(ev.high);
     }, 5000);
     const t4 = setTimeout(() => {
-      const msg = "Mo removed post it note from feature board: employer testimonials.";
-      setEvents((e) => [...e, msg]);
-      if (verbosityRef.current === "high") announceQueued(msg);
+      const ev = { high: "Mo removed post it note from feature board: employer testimonials.", low: "Mo removed a note." };
+      setEvents((e) => [...e, ev]);
+      if (verbosityRef.current === "high") announceQueued(ev.high);
     }, 7000);
     return () => {
       scheduledRef.current = false;
@@ -71,7 +73,7 @@ export function Collaboration() {
               checked={verbosity === "low"}
               onChange={() => setVerbosity("low")}
               className="rounded-full"
-              data-speak="Verbosity low. Radio button."
+              data-speak="Radio button. Verbosity low."
             />
             <span>Low</span>
           </label>
@@ -82,7 +84,7 @@ export function Collaboration() {
               checked={verbosity === "high"}
               onChange={() => setVerbosity("high")}
               className="rounded-full"
-              data-speak="Verbosity high. Radio button."
+              data-speak="Radio button. Verbosity high."
             />
             <span>High</span>
           </label>
@@ -91,12 +93,15 @@ export function Collaboration() {
       <div className="mb-6 min-h-[120px] rounded border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-4">
         <p className="text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">Events</p>
         <ul className="list-disc list-inside text-slate-700 dark:text-slate-300 text-sm space-y-1">
-          {events.map((ev, i) => (
-            <li key={i} tabIndex={0} className={fc} data-speak={ev}>{ev}</li>
-          ))}
+          {events.map((ev, i) => {
+            const text = eventText(ev);
+            return (
+              <li key={i} tabIndex={0} className={fc} data-speak={text}>{text}</li>
+            );
+          })}
         </ul>
       </div>
-      <Button type="button" onClick={advance} data-speak="Next. Button.">
+      <Button type="button" onClick={advance} data-speak="Button. Next.">
         Next
       </Button>
     </div>
