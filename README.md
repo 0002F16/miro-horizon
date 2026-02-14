@@ -29,3 +29,12 @@ If you are developing a production application, we recommend using TypeScript wi
    - **Frontend:** `npm run dev` (Vite at http://localhost:5173, proxies `/api` to the backend)
 
 Open the app in the browser; the Board screen loads items from your Miro board.
+
+## Vercel deployment
+
+For Vercel, the backend is provided by serverless functions in the `api/` folder. Set these environment variables in your Vercel project (Settings → Environment Variables):
+
+- `MIRO_ACCESS_TOKEN` – your Miro access token
+- `MIRO_BOARD_ID` – your Miro board ID
+
+Without these, the API returns 503 and voting will fail.
