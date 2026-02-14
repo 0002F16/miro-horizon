@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useApp } from "../context/AppContext";
 import { speak } from "../utils/speech";
+import { stripHtml } from "../utils/stripHtml";
 import { SECTION_TITLE, INITIAL_VOTES } from "../data/board";
 import { getRandomTeamMember } from "../data/scenario";
 import { fetchBoardItems, submitVote as apiSubmitVote } from "../api/board";
@@ -118,7 +119,7 @@ export function Board() {
         const voters = getVoters(item.id, otherVotes, userVotes);
         const voteText = voters.length === 0 ? "No votes yet." : `${voters.length} vote${voters.length !== 1 ? "s" : ""}. Voted by: ${voters.join(", ")}.`;
         const youPart = userVotes.has(item.id) ? " You voted for this item." : "";
-        speak(`Item ${focusedIndex + 1} of ${items.length}: ${item.title}. ${item.description}. ${voteText}${youPart}`, { interrupt: true });
+        speak(`Item ${focusedIndex + 1} of ${items.length}: ${stripHtml(item.title)}. ${stripHtml(item.description)}. ${voteText}${youPart}`, { interrupt: true });
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -164,7 +165,7 @@ export function Board() {
             const voteCount = voters.length;
             const votersText = voteCount === 0 ? "No votes" : voteCount === 1 ? `1 vote · ${voters[0]}` : `${voteCount} votes · ${voters.join(", ")}`;
             const speakVoters = voteCount === 0 ? "No votes yet." : `${voteCount} vote${voteCount !== 1 ? "s" : ""}. Voted by: ${voters.join(", ")}.`;
-            const dataSpeak = `Item ${i + 1} of ${items.length}: ${it.title}. ${speakVoters} ${userVotes.has(it.id) ? "You voted. " : ""}${canVote ? "Press V to add vote." : ""}`;
+            const dataSpeak = `Item ${i + 1} of ${items.length}: ${stripHtml(it.title)}. ${speakVoters} ${userVotes.has(it.id) ? "You voted. " : ""}${canVote ? "Press V to add vote." : ""}`;
             return (
               <li key={it.id}>
                 <button
@@ -177,7 +178,7 @@ export function Board() {
                   data-speak={dataSpeak}
                 >
                   <span className="flex justify-between items-center">
-                    <span className="font-medium">{it.title}</span>
+                    <span className="font-medium">{stripHtml(it.title)}</span>
                     {userVotes.has(it.id) && <span className="text-indigo-600 dark:text-indigo-400 text-sm font-medium">You voted</span>}
                   </span>
                   <span className="text-sm text-slate-600 dark:text-slate-400">

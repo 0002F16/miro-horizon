@@ -1,4 +1,4 @@
-import { fetchBoardItems } from "../../_lib/miro.js";
+import { fetchBoardItems, stripHtml } from "../../_lib/miro.js";
 
 const MIRO_API = "https://api.miro.com/v2";
 
@@ -48,7 +48,8 @@ export default async function handler(req, res) {
       if (!r.ok) throw new Error(`Miro ${r.status}`);
       const body = await r.json();
       for (const item of body.data || []) {
-        const firstLine = (item.data?.content ?? "").split("\n")[0]?.trim();
+        const rawFirst = (item.data?.content ?? "").split("\n")[0]?.trim() ?? "";
+        const firstLine = stripHtml(rawFirst) || rawFirst.replace(/<[^>]*>/g, "").trim();
         if (firstLine === itemId) {
           miroId = item.id;
           break;

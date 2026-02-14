@@ -4,6 +4,12 @@
  */
 const MIRO_API = "https://api.miro.com/v2";
 
+/** Strip HTML tags so content from Miro (e.g. <p>text</p>) displays as plain text. Preserves newlines. */
+export function stripHtml(str) {
+  if (typeof str !== "string") return "";
+  return str.replace(/<[^>]*>/g, "").trim();
+}
+
 export async function fetchBoardItems() {
   const { MIRO_ACCESS_TOKEN, MIRO_BOARD_ID } = process.env;
   if (!MIRO_BOARD_ID || !MIRO_ACCESS_TOKEN) {
@@ -28,7 +34,8 @@ export async function fetchBoardItems() {
     const body = await res.json();
     for (const item of body.data || []) {
       const raw = item.data?.content ?? "";
-      const lines = raw.split("\n").map((s) => s.trim()).filter(Boolean);
+      const cleaned = stripHtml(raw) || raw.replace(/<[^>]*>/g, "").trim();
+      const lines = cleaned.split("\n").map((s) => stripHtml(s).trim()).filter(Boolean);
       if (lines.length >= 3) {
         items.push({
           id: lines[0],
@@ -36,10 +43,11 @@ export async function fetchBoardItems() {
           description: lines.slice(2).join(" "),
         });
       } else {
+        const plain = (cleaned || raw).replace(/<[^>]*>/g, "").trim();
         items.push({
           id: String(item.id),
-          title: raw.slice(0, 50) || "Untitled",
-          description: raw.slice(50) || "",
+          title: plain.slice(0, 50) || "Untitled",
+          description: plain.slice(50) || "",
         });
       }
     }
