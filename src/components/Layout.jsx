@@ -33,7 +33,7 @@ export function Layout({ children, keyboardHelpOpen, setKeyboardHelpOpen, blindM
           />
         )}
       </div>
-      <KeyboardHelpDialog open={keyboardHelpOpen} onClose={() => setKeyboardHelpOpen(false)} />
+      <KeyboardHelpDialog open={keyboardHelpOpen} onClose={() => setKeyboardHelpOpen(false)} currentStep={currentStep} />
     </>
   );
 }

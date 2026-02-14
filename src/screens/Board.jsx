@@ -76,7 +76,7 @@ export function Board() {
     const r = remaining - 1;
     if (r <= 0) {
       announce("You have used all available votes.");
-      goToStep(8);
+      goToStep(7);
     } else {
       announce(r === 1 ? "You have 1 vote remaining." : `You have ${r} votes remaining.`);
     }

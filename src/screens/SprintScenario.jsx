@@ -35,6 +35,7 @@ export function SprintScenario() {
         Design Sprint Scenario
       </h1>
       <div className="text-slate-600 dark:text-slate-300 space-y-4 mb-6">
+        <p tabIndex={0} className={fc} data-speak="Listen carefully.">Listen carefully.</p>
         <p tabIndex={0} className={fc} data-speak={`You are part of the product team at ${COMPANY_NAME}.`}>You are part of the product team at {COMPANY_NAME}.</p>
         <p tabIndex={0} className={fc} data-speak={`Your team: ${TEAM_NAMES.join(", ")}.`}>Your team: {TEAM_NAMES.join(", ")}.</p>
         <p tabIndex={0} className={fc} data-speak="Your goal: vote on the top two features to prioritize.">Your goal: vote on the top two features to prioritize.</p>

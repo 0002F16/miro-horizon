@@ -1,18 +1,34 @@
 import { useEffect, useRef } from "react";
 import { Button } from "./ui";
 
-const SHORTCUTS = [
+const SHORTCUTS_BASE = [
   { keys: "Tab", desc: "Move forward" },
   { keys: "Shift + Tab", desc: "Move backward" },
   { keys: "Arrow keys", desc: "Move within lists" },
   { keys: "R", desc: "Hear summary" },
-  { keys: "V", desc: "Add vote (on board)" },
-  { keys: "Shift + V", desc: "Remove vote (on board)" },
   { keys: "Enter", desc: "Activate / open item" },
   { keys: "Escape", desc: "Close this dialog" },
 ];
 
-export function KeyboardHelpDialog({ open, onClose }) {
+const SHORTCUTS_VOTING = [
+  { keys: "V", desc: "Add vote (on board)" },
+  { keys: "Shift + V", desc: "Remove vote (on board)" },
+];
+
+const SHORTCUTS_MOVING = [
+  { keys: "V", desc: "Grab post-it" },
+  { keys: "Shift + V", desc: "Drop post-it" },
+  { keys: "P", desc: "Proceed / continue" },
+];
+
+function getShortcuts(currentStep) {
+  const isMovingStep = currentStep === 9;
+  const vShortcuts = isMovingStep ? SHORTCUTS_MOVING : SHORTCUTS_VOTING;
+  return [...SHORTCUTS_BASE.slice(0, 4), ...vShortcuts, ...SHORTCUTS_BASE.slice(4)];
+}
+
+export function KeyboardHelpDialog({ open, onClose, currentStep = 0 }) {
+  const shortcuts = getShortcuts(currentStep);
   const dialogRef = useRef(null);
   const previousActiveRef = useRef(null);
 
@@ -73,7 +89,7 @@ export function KeyboardHelpDialog({ open, onClose }) {
           Keyboard Help
         </h2>
         <ul className="space-y-2 text-slate-600 dark:text-slate-300">
-          {SHORTCUTS.map(({ keys, desc }) => (
+          {shortcuts.map(({ keys, desc }) => (
             <li
               key={keys}
               tabIndex={0}

@@ -10,11 +10,13 @@ import { Collaboration } from "./screens/Collaboration";
 import { BlindModeIntro } from "./screens/BlindModeIntro";
 import { SprintScenario } from "./screens/SprintScenario";
 import { Board } from "./screens/Board";
+import { VotingComplete } from "./screens/VotingComplete";
+import { MovingPostitsBriefing } from "./screens/MovingPostitsBriefing";
+import { MovingPostits } from "./screens/MovingPostits";
 import { Completion } from "./screens/Completion";
-import { Results } from "./screens/Results";
 import { ProgramEnd } from "./screens/ProgramEnd";
 
-const TOTAL_STEPS = 11; // 0–10
+const TOTAL_STEPS = 12; // 0–11
 
 function isFocusable(el) {
   if (!el || el.getAttribute?.("aria-hidden") === "true") return false;
@@ -103,13 +105,16 @@ function AppContent() {
       case 5:
         return <SprintScenario />;
       case 6:
-      case 7:
         return <Board />;
+      case 7:
+        return <VotingComplete />;
       case 8:
-        return <Completion />;
+        return <MovingPostitsBriefing />;
       case 9:
-        return <Results />;
+        return <MovingPostits />;
       case 10:
+        return <Completion />;
+      case 11:
         return <ProgramEnd />;
       default:
         return <Intro />;
