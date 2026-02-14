@@ -52,6 +52,14 @@ export function MovingPostitsBriefing() {
         You navigate by moving focus through the list—first To Do, then Doing, then Done. Press <kbd className="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 font-mono text-sm">P</kbd> anytime to proceed to the next step.
       </p>
 
+      <p
+        tabIndex={0}
+        className={`text-slate-800 dark:text-slate-100 font-semibold mb-6 ${fc}`}
+        data-speak="Objective: move all post-its to the Done column."
+      >
+        OBJECTIVE: move all post-its to the DONE column
+      </p>
+
       <Button type="button" onClick={advance} data-speak="Continue to Moving Post-its. Button.">
         Continue
       </Button>
